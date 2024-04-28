@@ -1,0 +1,38 @@
+{% extends 'basefront.html.twig' %}
+
+{% block body %}
+
+
+<h3>   Nos Sponsors     </h3>
+
+
+	<div class="row g-4">
+		{% for sponsor in b %}
+			<div class="col-lg-12 col-md-6 wow zoomIn" data-wow-delay="0.6s" style="visibility: visible; animation-delay: 0.6s; animation-name: zoomIn;">
+				<div class="service-item d-flex flex-column justify-content-center text-center rounded">
+					<div class="service-icon flex-shrink-0">
+			<i class="fa fa-home fa-2x"></i>
+
+					</div>
+					<h5 class="mb-3">{{ sponsor.nom}}
+					</h5>
+					<p>
+						ADRESSE :
+						{{  sponsor.adresse}}</p>
+					<p>
+						EMAIL :
+						{{  sponsor.email }}</p>
+					
+					<p>
+						TELEPHONE :
+						{{  sponsor.num_tel }}</p>
+					
+				</div>
+			</div>
+		{% endfor %}
+
+
+
+
+{% endblock %}
+

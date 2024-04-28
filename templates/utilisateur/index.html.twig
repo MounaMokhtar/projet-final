@@ -1,0 +1,75 @@
+{% extends 'baseback.html.twig' %}
+
+ {% block body %}
+
+            <!-- Quick Action Toolbar Starts-->
+          
+            <!-- Quick Action Toolbar Ends-->
+        
+          <!-- content-wrapper ends -->
+          <!-- partial:partials/_footer.html -->
+        
+<div class="table-responsive" >
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">Nom d'utilisateur</th>
+   
+      <th scope="col">age</th>
+
+        <th scope="col">Nom</th>
+      <th scope="col">Prénom</th>
+      <th scope="col">Role</th>
+      <th scope="col">Bloquer</th>
+
+        <th scope="col">Email</th>
+      <th scope="col">Code</th>
+      <th scope="col">Photo</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for user in b %}
+    <tr>
+     
+    <td> {{ user.id }}</td> 
+     <td> {{ user.username}} </td> 
+   
+       <td>{{  user.age|date('d-m-Y') }}</td> 
+        <td>{{  user.nom}} </td> 
+         <td>{{  user.prenom }}</td> 
+          <td>{{  user.role }}</td> 
+           <td> {{ user.bloquer }}</td> 
+            <td> {{ user.email }}</td> 
+             <td>{{  user.code }}</td> 
+                          <td> <img src="uploads/{{  user.photo }}" height="100" width="100"> </td> 
+
+
+             <td> 
+           {% if user.bloquer == 1 %}
+              <a href="{{path('bloquer',{'id':user.id}) }}">Bloquer </a>
+           
+            {% else %}
+              <a href="{{path('bloquer',{'id':user.id}) }}">Déblocker </a>
+
+
+            {% endif %}
+
+
+              <a href="{{path('modifierUser',{'id':user.id}) }}">Modifier </a>
+               <a href="{{path('deleteuser',{'id':user.id}) }}">Supprimer </a>
+               
+
+
+
+             
+              </td> 
+    </tr>
+  
+      {% endfor %}
+
+  </tbody>
+</table>
+</div>
+{% endblock %}
+

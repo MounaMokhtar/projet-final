@@ -1,0 +1,92 @@
+{% extends 'basefront.html.twig' %}
+
+{% block body %}
+
+ <div class = "container">
+        <button id="takePictureBtn" name="takePictureBtn">Take Picture</button>
+        <input type="text"  name="username" id="username" class="form-control" autocomplete="username" placeholder="username" required autofocus>
+
+        <video id="video" autoplay muted></video>
+        <canvas id="canvas" style="display: none; width:300px;height:300px;"></canvas>
+        <button id="snapBtn" name="snapBtn" style="display: none;">Snap</button>
+    </div>
+    </section>
+
+
+<script>
+   const canvas = document.querySelector('#canvas');
+    canvas.width = 400;
+    canvas.height = 300;
+    const takePictureBtn = document.querySelector('#takePictureBtn');
+    const snapBtn = document.querySelector('#snapBtn');
+    const form = document.querySelector('#my-form');
+// Check if getUserMedia is available
+takePictureBtn.addEventListener('click', function(){
+if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+  // Request access to the webcam
+  takePictureBtn.style.display = 'none';
+  snapBtn.style.display = 'block';
+  navigator.mediaDevices.getUserMedia({ video: true })
+    .then(function(stream) {
+      // Attach the stream to the video element
+      video.srcObject = stream;
+      video.play();
+      video.height = 300;
+      const mediaStreamTrack = stream.getVideoTracks()[0];
+    })
+    .catch(function(error) {
+      console.error('Could not access the webcam: ' + error.message);
+    });
+} else {
+  console.error('getUserMedia is not supported in this browser.');
+  }
+});
+// Add event listener for the "Take Picture" button
+snapBtn.addEventListener('click', function() {
+  $(document).ready(function() {
+  // your code here
+  video.pause();
+  // Draw the current frame of the video on the canvas
+  var context = canvas.getContext('2d');
+  context.drawImage(video, 0, 0, 400, 300);
+  var dataURL = canvas.toDataURL('image/jpeg');
+  var username= document.getElementById('username').value;
+  var path ; 
+  
+  $.ajax({
+    url: '/save-img',
+    type: 'POST',
+    data: {'image': dataURL,
+            'username':username
+    },
+    dataType: 'json',
+    success: function (response) {
+      if (response) {
+        console.log("success");
+        console.log("filename: " + response);
+        if (response == 1)
+        {
+
+        window.location.href ='{{ path('home') }}';
+
+        }
+        else
+        {
+        window.location.href ='{{ path('home') }}';
+
+        }
+       
+      } else {
+        window.location.href ='{{ path('home') }}';
+      }
+    } 
+  });
+  // Stop all video streams.
+  video.srcObject.getVideoTracks().forEach(track => track.stop());
+  snapBtn.style.display = 'none';
+  takePictureBtn.style.display = 'block';
+});
+});
+    </script>
+    {% endblock %}
+   

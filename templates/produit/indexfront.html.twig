@@ -1,0 +1,164 @@
+{% extends 'basefront.html.twig' %}
+
+{% block body %}
+
+	{% for message in app.session.flashbag.get('success') %}
+		<div class="alert alert-success">
+			{{ message }}
+		</div>
+		<br>
+		<br>
+		<br>
+		<br>
+	{% endfor %}
+
+	<div class="row g-4">
+		{% for produit in b %}
+			<div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.6s" style="visibility: visible; animation-delay: 0.6s; animation-name: zoomIn;">
+				<div class="service-item d-flex flex-column justify-content-center text-center rounded">
+					<div class="service-icon flex-shrink-0">
+						<a href="{{path('ajouterfavorie',{'id':produit.id}) }}">
+							<i class="bi bi-heart"></i>
+						</a>
+
+					</div>
+					<h5 class="mb-3">{{ produit.nom_produit}}
+					</h5>
+					<p>
+						prix :
+						{{  produit.prix}} TND /  {{  produit.prix * 0.00018}} ether</p>
+					<p>
+						quantite :
+						{{  produit.quantite }}</p>
+					<p>
+						<img src="uploads/{{ produit.photo }}" height="100" width="100">
+					</p>
+					<p>
+						date :
+						{{  produit.date|date('d-m-Y') }}</p>
+					<p>
+						description :
+						{{  produit.description }}</p>
+					<a class="btn px-3 mt-auto mx-auto" href="{{path('ajouterdemande',{'id':produit.id}) }}">demande</a>
+					<button class="btn px-3 mt-auto mx-auto" data-toggle="modal" data-target="#priceModal{{ produit.id }}">Buy</button>
+				</div>
+			</div>
+		<div class="modal fade" id="priceModal{{ produit.id }}" tabindex="-1" role="dialog" aria-labelledby="priceModalLabel{{ produit.id }}" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="priceModalLabel{{ produit.id }}">Price</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<p>choose payement method</p>
+						<p>The price of {{ produit.nom_produit }} is {{ produit.prix }}</p>
+						<table>
+							<tr>
+								<td>
+									<a href="/paiement/{{ produit.id }}" class="btn btn-secondary text-light rounded-pill py-2 px-3 ms-3">credit card</a>
+								</td>
+								<td>
+									<button class=" btn btn-secondary text-light rounded-pill py-2 px-4 ms-3" onclick="sendEthToAddress({{  produit.prix * 0.00018}});">etheruem</button>
+								</td>
+
+							</tr>
+						</table>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+		{% endfor %}
+	</div>
+
+	<br>
+	<br>
+
+	<br>
+	<br>
+
+
+	{% do b.setPageRange(4) %}
+	{{ knp_pagination_render(b, 'appel_offre/pagination.html.twig') }}
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			$('button[data-target^="#priceModal"]').on('click', function(){
+				var target = $(this).data('target');
+				$(target).modal('show');
+			});
+		});
+	</script>
+
+	<script src="{{asset('https://cdnjs.cloudflare.com/ajax/libs/web3/1.7.4-rc.1/web3.min.js')}}"></script>
+
+	<script src="https://unpkg.com/sweetalert2@7.8.2/dist/sweetalert2.all.js"></script>
+	<script>
+		function sendEthToAddress(prix) {
+			// Convert the prix parameter to a hexadecimal string
+			const hexValue = parseFloat(prix).toString(16);
+			const hexValueWithoutPrefix = hexValue.substr(2);
+			console.log(hexValueWithoutPrefix);
+			// Send Ethereum to an address
+			ethereum
+					.request({
+						method: 'eth_sendTransaction',
+						params: [
+							{
+								from: accounts[0], // The user's active address.
+								to: '0x805EA89b774B023f2764dE01912F811f2Af0E03c', // Required except during contract publications.
+								value:  '0x'+hexValueWithoutPrefix, // Only required to send ether to the recipient from the initiating external account.
+							},
+						],
+					})
+					.then((txHash) => Swal.fire(
+							'Good job!',
+							'You clicked the button!',
+							'success'
+					)
+					)
+					.catch((error) => Swal.fire('Any fool can use a computer'));
+		}
+
+
+
+		const ethereumButton = document.querySelector('.enableEthereumButton');
+		/*const sendEthButton = document.querySelector('.sendEthButton');
+
+		let accounts = [];
+
+		// Send Ethereum to an address
+		sendEthButton.addEventListener('click', () => {
+			var decimalValue = document.getElementById('prix').value;
+			var hexValue = decimalValue.toString(16);
+			ethereum
+					.request({
+						method: 'eth_sendTransaction',
+						params: [
+							{
+								from: accounts[0], // The user's active address.
+								to: '0x805EA89b774B023f2764dE01912F811f2Af0E03c', // Required except during contract publications.
+								value: '0DE0B6B3A7640000', // Only required to send ether to the recipient from the initiating external account.
+// document.getElementById('prix').value
+							},
+						],
+					})
+					.then((txHash) => console.log(txHash))
+					.catch((error) => console.error(error));
+		});*/
+
+		ethereumButton.addEventListener('click', () => {
+			getAccount();
+		});
+
+		async function getAccount() {
+			accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+		}
+	</script>
+{% endblock %}

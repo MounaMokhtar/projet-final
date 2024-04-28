@@ -1,0 +1,217 @@
+{% extends 'baseFront.html.twig' %}
+
+
+{% block body %}
+
+	<div class="container">
+
+
+		<div class="container-xxl bg-white p-0">
+			<div class="container-xxl py-5">
+				<div class="container px-lg-5">
+					<div class="row justify-content-center">
+						<div class="col-lg-7">
+							<div class="section-title position-relative text-center mb-5 pb-2 wow fadeInUp" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;">
+								<h6 class="position-relative d-inline text-primary ps-4">Créer un compte</h6>
+								<h2 class="mt-2">Entrez vos informations personnelles pour créer un compte</h2>
+							</div>
+							<div class="wow fadeInUp" data-wow-delay="0.3s" style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
+								{{ form_start(form,{attr:{novalidate:'novalidate'}}) }}
+								<div class="row g-3">
+									<div class="col-md-6">
+										<div class="form-floating">
+											<div class="invalid-feedback">S'il vous plaît entrez votre nom!</div>
+
+											{{ form_widget(form.nom,{'attr':{'class':'form-control'}}) }}
+											{{ form_errors(form.nom,{ 'attr':{'class':'text-danger'}}) }}
+											<label for="name">Nom</label>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-floating">
+											<div class="invalid-feedback">S'il vous plaît, entrez votre prénom !
+</div>
+
+											{{ form_widget(form.prenom,{'attr':{'class':'form-control'}}) }}
+											{{ form_errors(form.prenom,{ 'attr':{'class':'text-danger'}}) }}
+											<label for="email">Prénom</label>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-floating">
+											<div class="invalid-feedback">S'il vous plaît, entrez votre âge !</div>
+
+											{{ form_widget(form.age,{'attr':{'class':'form-control'}}) }}
+											{{ form_errors(form.age,{ 'attr':{'class':'text-danger'}}) }}
+											<label for="email">Age</label>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-floating">
+											<div class="invalid-feedback">S'il vous plaît, entrez votre adresse!
+</div>
+
+											{{ form_widget(form.adresse,{'attr':{'class':'form-control'}}) }}
+											{{ form_errors(form.adresse,{ 'attr':{'class':'text-danger'}}) }}
+											<label for="email">Adresse</label>
+										</div>
+									</div>
+									<div class="col-12">
+										<div class="form-floating">
+											<div class="invalid-feedback">S'il vous plaît entrez votre nom d'utilisateur!</div>
+
+											{{ form_widget(form.username,{'attr':{'class':'form-control'}}) }}
+											{{ form_errors(form.username,{ 'attr':{'class':'text-danger'}}) }}
+											<label for="name">Nom d'utilisateur</label>
+										</div>
+									</div>
+									<div class="col-12">
+										<div class="form-floating">
+											<div class="invalid-feedback">S'il vous plaît, entrez votre email!
+</div>
+
+											{{ form_widget(form.email,{'attr':{'class':'form-control'}}) }}
+											{{ form_errors(form.email,{ 'attr':{'class':'text-danger'}}) }}
+											<label for="subject">Email</label>
+										</div>
+									</div>
+									<div class="col-12">
+										<div class="form-floating">
+											<div class="invalid-feedback">S'il vous plaît, entrez votre mot de passe !</div>
+
+											{{ form_widget(form.password,{'attr':{'class':'form-control'}}) }}
+											{{ form_errors(form.password,{ 'attr':{'class':'text-danger'}}) }}
+											<label for="subject">Mot de Passe</label>
+										</div>
+									</div>
+									<div class="col-12">
+										<div class="form-floating">
+											<div class="invalid-feedback">S'il vous plaît, entrez votre photo!</div>
+
+											{{ form_widget(form.photo,{'attr':{'class':'form-control'}}) }}
+											{{ form_errors(form.photo,{ 'attr':{'class':'text-danger'}}) }}
+											<label for="subject">Photo</label>
+										</div>
+									</div>
+
+									<div class="col-12">
+										<button class="btn btn-primary w-100 py-3" type="submit">Submit</button>
+									</div>
+									<div class="col-12">
+										<p class="small mb-0">Vous avez déjà un compte?
+											<a href="{{path('app_login')}}">Se connecter
+</a>
+										</p>
+									</div>
+								</div>
+								{{ form_end(form) }}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		{# <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+																			<div class="container">
+																				<div class="row justify-content-center">
+																					<div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+																
+																						<div class="d-flex justify-content-center py-4">
+																							<a href="index.html" class="logo d-flex align-items-center w-auto"></a>
+																						</div>
+																						<!-- End Logo -->
+																
+																
+																						<div class="card mb-3">
+																
+																							<div class="card-body">
+																
+																								<div class="pt-4 pb-2">
+																									<h5 class="card-title text-center pb-0 fs-4">Create an Account</h5>
+																									<p class="text-center small">Enter your personal details to create account</p>
+																								</div>
+																
+																
+																								{{ form_start(form,{attr:{novalidate:'novalidate'}}) }}
+																								<div class="col-12">
+																									<label for="yourName" class="form-label">Your Name</label>
+																
+																									<div class="invalid-feedback">Please, enter your name!</div>
+																									{{ form_widget(form.nom,{'attr':{'class':'form-control'}}) }}
+																									{{ form_errors(form.nom,{ 'attr':{'class':'text-danger'}}) }}
+																
+																								</div>
+																								<div class="col-12">
+																									<label for="yourName" class="form-label">Your prenom</label>
+																
+																									<div class="invalid-feedback">Please, enter your prenom!</div>
+																									{{ form_widget(form.prenom,{'attr':{'class':'form-control'}}) }}
+																									{{ form_errors(form.prenom,{ 'attr':{'class':'text-danger'}}) }}
+																
+																								</div>
+																								<div class="col-12">
+																									<label for="yourEmail" class="form-label">Your Email</label>
+																									{{ form_widget(form.email,{'attr':{'class':'form-control'}}) }}
+																									{{ form_errors(form.email,{ 'attr':{'class':'text-danger'}}) }}
+																									<div class="invalid-feedback">Please enter a valid Email adddress!</div>
+																								</div>
+																
+																
+																								<div class="col-12">
+																									<label for="yourPassword" class="form-label">Password</label>
+																									{{ form_widget(form.password,{'attr':{'class':'form-control'}}) }}
+																									{{ form_errors(form.password,{ 'attr':{'class':'text-danger'}}) }}
+																									<div class="invalid-feedback">Please enter your password!</div>
+																								</div>
+																
+																								<div class="col-12">
+																									<label for="youradresse" class="form-label">Your adresse</label>
+																									{{ form_widget(form.adresse,{'attr':{'class':'form-control'}}) }}
+																									{{ form_errors(form.adresse,{ 'attr':{'class':'text-danger'}}) }}
+																									<div class="invalid-feedback">Please enter a valid adresse</div>
+																								</div>
+																
+																								<div class="col-12">
+																									<label for="youradresse" class="form-label">Your age</label>
+																									{{ form_widget(form.age,{'attr':{'class':'form-control'}}) }}
+																									{{ form_errors(form.age,{ 'attr':{'class':'text-danger'}}) }}
+																									<div class="invalid-feedback">Please enter a valid age</div>
+																								</div>
+																								<div class="col-12">
+																									<label for="youradresse" class="form-label">Your username</label>
+																									{{ form_widget(form.username,{'attr':{'class':'form-control'}}) }}
+																									{{ form_errors(form.username,{ 'attr':{'class':'text-danger'}}) }}
+																									<div class="invalid-feedback">Please enter a valid age</div>
+																								</div>
+																								<div class="col-12">
+																									<label for="youradresse" class="form-label">Your photo</label>
+																									{{ form_widget(form.photo,{'attr':{'class':'form-control'}}) }}
+																									{{ form_errors(form.photo,{ 'attr':{'class':'text-danger'}}) }}
+																									<div class="invalid-feedback">Please enter a valid age</div>
+																								</div>
+																
+																
+																								<div class="col-12">
+																									<button class="btn btn-primary w-100" type="submit">Create Account</button>
+																								</div>
+																								<div class="col-12">
+																									<p class="small mb-0">Already have an account?
+																										<a href="{{path('app_login')}}">Log in</a>
+																									</p>
+																								</div>
+																
+																								{{ form_end(form) }}
+																
+																							</div>
+																						</div>
+																
+																
+																					</div>
+																				</div>
+																			</div>
+																
+																		</section> #}
+
+	</div>
+{% endblock %}
